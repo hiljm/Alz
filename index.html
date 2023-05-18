@@ -1,16 +1,190 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=euc-kr">
+   <meta charset="UTF-8">
+	
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
-<meta name="keywords" content="º¸Çè, AIA»ı¸í, AIA, »ı¸íº¸Çè, º¸Àå">
-<meta name="description" content="AIA»ı¸íÀº ´Ù¾çÇÑ »óÇ°°ú ¼­ºñ½º·Î °í°´ÀÇ ´ÏÁî¸¦ ¸¸Á·½ÃÅ°±â À§ÇØ ÃÖ¼±À» ´ÙÇÏ°í ÀÖ½À´Ï´Ù. »ç¸Áº¸Àå, Áúº´, »óÇØ´Â ¹°·Ğ ÀºÅğ¼³°è¿¡ ÀÌ¸£±â±îÁö ÃÖÀûÀÇ ¸ÂÃãº¸ÀåÀ» Á¦°øÇØ µå¸³´Ï´Ù. ">
+<meta name="keywords" content="ë³´í—˜, AIAìƒëª…, AIA, ìƒëª…ë³´í—˜, ë³´ì¥">
+<meta name="description" content="AIAìƒëª…ì€ ë‹¤ì–‘í•œ ìƒí’ˆê³¼ ì„œë¹„ìŠ¤ë¡œ ê³ ê°ì˜ ë‹ˆì¦ˆë¥¼ ë§Œì¡±ì‹œí‚¤ê¸° ìœ„í•´ ìµœì„ ì„ ë‹¤í•˜ê³  ìˆìŠµë‹ˆë‹¤. ì‚¬ë§ë³´ì¥, ì§ˆë³‘, ìƒí•´ëŠ” ë¬¼ë¡  ì€í‡´ì„¤ê³„ì— ì´ë¥´ê¸°ê¹Œì§€ ìµœì ì˜ ë§ì¶¤ë³´ì¥ì„ ì œê³µí•´ ë“œë¦½ë‹ˆë‹¤. ">
 <meta property="og:image" content="http://www.aia.co.kr/content/dam/kr/ko/images/site/og/aia-life.png">
-<title>(¹«) µçµçÆ°Æ°Ä¡¸Åº¸Çè | AIA</title>
+<title>(ë¬´) ë“ ë“ íŠ¼íŠ¼ì¹˜ë§¤ë³´í—˜ | AIA</title>
 <link rel="shortcut icon" type="image/x-icon" href="https://www.aia.co.kr/favicon.ico">
 <script src="./js/jquery-2.1.1.min.js"></script>
+<script>
+
+function addViewportEvent(e,i){var t="scroll.addViewportEvent load.addViewportEvent resize.addViewportEvent";if(e=$.extend({parent:window,triggerPosition:!1,triggerPositionPercent:!1,enter:!1,leave:!1,visiblePercent:!1,visible:!1,invisible:!1},e||{}),"number"==typeof(e.triggerPosition&&e.triggerPositionPercent))return!0;$.fn.extend({destroy:function(){$(e.parent).off(t)}});return i.each(function(i,r){var n=!1,o=!1,s=!1,g=e.parent;$(g).on(t,function(){var i={Height:$(r).outerHeight(),ViewportHeight:$(g).height(),ScrollTop:$(document).scrollTop(),OffsetTop:$(r).offset().top},t=((i.ScrollTop+i.ViewportHeight-i.OffsetTop)/i.Height*100).toFixed(2),l=-((i.ScrollTop-i.OffsetTop-i.Height)/i.Height*100).toFixed(2),c=i.OffsetTop-i.ScrollTop-e.triggerPosition,v=(c/i.ViewportHeight*100-e.triggerPositionPercent).toFixed(2);o=t>=0&&l>=0,v>=50?v=50:-50>=v&&(v=-50),o&&100>=t?visiblePercent=t:o&&100>=l?visiblePercent=l:o?visiblePercent=100:visiblePercent=0,o&&(r.isVisible=o,r.isEnter=n,r.viewPortPositionPercent=v,r.viewPortPosition=c,r.visiblePercent=visiblePercent),o&&((!n&&e.triggerPositionPercent!==!1&&0>=v||e.triggerPosition&&0>=c)&&($(r).trigger("enter"),$.isFunction(e.enter)&&e.enter()),(n&&e.triggerPositionPercent!==!1&&v>0||e.triggerPosition&&c>0)&&($(r).trigger("leave"),$.isFunction(e.leave)&&e.leave())),!s&&visiblePercent>0&&($(r).trigger("visible"),$.isFunction(e.visible)&&e.visible()),s&&0==visiblePercent&&($(r).trigger("invisible"),$.isFunction(e.invisible)&&e.invisible(),$(r).trigger("leave"),$.isFunction(e.leave)&&e.leave()),$.isFunction(e.visiblePercent)&&e.visiblePercent(Number(visiblePercent),i),s=0!=visiblePercent,n=e.triggerPositionPercent&&0>=v&&o||e.triggerPosition&&0>=c&&o})})}
+
+function calc() {
+    $(".popup.calc").show();
+    $(".popup.agree").hide();
+}
+
+function comp() {
+    $(".popup.comp").show();
+    $(".popup.agree").hide();
+}
+
+(function($) {
+    var AIA_UI = {
+		var : {
+			sChecked : null,
+			dChecked : null
+		},
+
+		popup: function() {
+            $('[data-role="open_popup"]').on({
+                "click" : function(e){
+					var array = $(this).attr("data-send").split("|");
+                    var target = $("[data-receive='"+ (array[0]) +"']");
+                    target.show();
+					if( array[1] == 1 ){
+						target.find(".all_check").attr("onclick", "calc()");
+					} else {
+						target.find(".all_check").attr("onclick", "comp()");
+					}
+                    e.preventDefault();
+                }
+            });
+            
+            $(".popup .btn_close").on({
+                "click" : function(e){
+                    $(this).parents(".popup").hide();
+                    e.preventDefault();
+                }
+            });
+        },
+
+        event : function(){
+            $(".guide_area button").on({
+                "click" : function(e){
+                    var target = $(this).parents(".guide_area").find(".img");
+                    if(target.hasClass("on")){
+                        target.removeClass("on");
+                    } else {
+                        target.addClass("on");
+						$("body, html").animate({ scrollTop :  parseInt($(".guide_area").offset().top - $(".header").height()) }, 500);
+                    }
+                }
+			});
+
+			$(".floating .btn01, .floating .btn02").on({
+				"click" : function(e){
+					var _this 	= $(this);
+					var target 	= $(".floating");
+					if(! target.hasClass("on") ){
+						target.addClass("on");
+					} 
+
+					$(".floating .calc, .floating .consult").hide();
+					if( _this.attr("class") == "btn01" ){
+						$(".floating .calc").show();
+					} else {
+						$(".floating .consult").show();
+					}
+					e.preventDefault();
+				}
+			});
+			
+			$(".floating .btn_toggle").on({
+				"click" : function(e){
+					var target 	= $(".floating");
+					if( target.hasClass("on") ){
+						target.removeClass("on");
+					} else {
+						target.addClass("on");
+					}
+					e.preventDefault();
+				}
+			});
+
+			$(".popup.agree .all_check").on({
+				"click" : function(e){
+					$(".popup.agree .agree input[type='checkbox']").prop("checked", true);
+					e.preventDefault();
+				}
+			});
+		},
+
+		scroll : function(){
+			$(window).scroll(function(){
+				var windowTop = $(window).scrollTop();
+				if( AIA_UI.var.sChecked == "s1" ){
+					var guideLine01 = $(".s02").offset().top - 50;
+					var guideLine02 = $(".s07").offset().top - parseInt($(window).height());
+					var guideLine03 = $(".guide_area").offset().top;
+					
+					if(  windowTop >= guideLine01 ){
+						$("#AIA_wrap").addClass("show");
+						if( windowTop > guideLine02 ){
+							$("#AIA_wrap").removeClass("show");
+						}
+						if( windowTop > guideLine03  ){
+							$("#AIA_wrap").addClass("show");
+						}
+					} else {
+						$("#AIA_wrap").removeClass("show");
+					} 
+				} else {
+					if ( windowTop > $(".s02").offset().top ){
+						$(".floating").addClass("fixed");
+					} else {
+						$(".floating").removeClass("fixed");
+					}
+				}
+			});
+		},
+
+        init: function() {
+			AIA_UI.var.sChecked = $(window).width() > 900 ? "s2" : "s1";
+			AIA_UI.var.dChecked = AIA_UI.var.sChecked;
+
+			imgReplace();
+			function imgReplace(){
+				$("#AIA_wrap img").each(function(){
+					if( AIA_UI.var.sChecked == "s1" ){
+						$(this).attr("src", $(this).attr("data-mo-src"));
+					} else {
+						$(this).attr("src", $(this).attr("data-pc-src"));
+					}
+				});
+			}
+
+			$(window).resize(function(){
+				AIA_UI.var.sChecked = $(window).width() > 900 ? "s2" : "s1";
+				if( AIA_UI.var.sChecked != AIA_UI.var.dChecked ){
+					imgReplace();
+					AIA_UI.var.dChecked = AIA_UI.var.sChecked
+				}
+			});
+
+            this.popup(), this.event(), this.scroll()
+        }
+    };
+    $(function() {
+		AIA_UI.init();
+		var percent = (AIA_UI.var.sChecked == "s1" ? 60 : 50);
+		
+		$(".AM").each(function(){
+			var _this = $(this);
+			addViewportEvent({
+				triggerPositionPercent: percent,
+				enter: function () {
+					_this.addClass("mt");
+				},
+				leave : function(){
+					//_this.removeClass("mt");
+				}
+			}, _this);
+		});
+	});
+
+	$(window).load(function(){
+		setTimeout(function(){$(window).scrollTop(0);},0);
+	});
+})(jQuery);
+</script>
 
 
 <style>
@@ -27,7 +201,7 @@
 }
 
 html,body,div,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,p,input,button,th,td,select,textarea,a { margin: 0; padding: 0; box-sizing: border-box; }
-body,a,input,button,select,strong,textarea { color: #000; font-family: "NanumSquareRegular","¸¼Àº °íµñ",Arial,Sans-serif; font-size: 15px; letter-spacing: -1px; word-break: keep-all; }
+body,a,input,button,select,strong,textarea { color: #000; font-family: "NanumSquareRegular","ë§‘ì€ ê³ ë”•",Arial,Sans-serif; font-size: 15px; letter-spacing: -1px; word-break: keep-all; }
 h1,h2,h3,h4,h5,h6 { font-size: 100%; }
 fieldset,img { border: 0 none; }
 img { vertical-align: top; }
@@ -393,9 +567,9 @@ input::-moz-placeholder { color: #7f7f7f; }
 	<div id="AIA_wrap">
 		<div class="header">
 			<div class="inner">
-				<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211125_aia_header.gif" data-mo-src="./images/m20211125_aia_header.gif" alt="°ø½Ä»çÀÌÆ® (¹«) µçµç Æ°Æ° Ä¡¸Åº¸Çè Áö±İ ¹Ù·Î Àü¹®°¡¿Í »ó´ãÇÏ·Á¸é? 080-200-6060">
+				<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211125_aia_header.gif" data-mo-src="./images/m20211125_aia_header.gif" alt="ê³µì‹ì‚¬ì´íŠ¸ (ë¬´) ë“ ë“  íŠ¼íŠ¼ ì¹˜ë§¤ë³´í—˜ ì§€ê¸ˆ ë°”ë¡œ ì „ë¬¸ê°€ì™€ ìƒë‹´í•˜ë ¤ë©´? 080-200-6060">
 				<a href="#" class="btn_home" >AIA HEATHIER,LONGET,BETTER LIVES</a>
-				<a href="tel:1600-0880" class="btn_tele only_mo" >ÀüÈ­ : 080-200-6060</a>
+				<a href="tel:1600-0880" class="btn_tele only_mo" >ì „í™” : 080-200-6060</a>
 				<div class="motion only_pc">
 					<div class="tri n01"></div>
 					<div class="tri n02"></div>
@@ -421,32 +595,32 @@ input::-moz-placeholder { color: #7f7f7f; }
 					<div class="img03 fade_up_blur"><img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211125_aia_s01_deco01.png" data-mo-src="./images/m20211125_aia_s01_deco01.png" alt=""></div>
 					<div class="img04 fade_up_blur"><img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211125_aia_s01_deco02.png" data-mo-src="./images/w20211125_aia_s01_deco02.png" alt=""></div>
 					<div class="db_box">
-						<h3 class="hide">½Ç½Ã°£ ³» º¸Çè·á °è»êÇÏ±â</h3>
+						<h3 class="hide">ì‹¤ì‹œê°„ ë‚´ ë³´í—˜ë£Œ ê³„ì‚°í•˜ê¸°</h3>
 						<form method="post" action="" name="frm">
 							<ul>
 								<li class="name">
-									<input type="text" id="rn_cust_name" name="rn_cust_name" placeholder="ÀÌ¸§" >
+									<input type="text" id="rn_cust_name" name="rn_cust_name" placeholder="ì´ë¦„" >
 								</li>		
 								<li class="sex">
 									<input type="radio" id="rn_sex1" name="rn_sex" value="M" checked="checked">
-									<label for="rn_sex1">³²</label>
+									<label for="rn_sex1">ë‚¨</label>
 									<input type="radio" id="rn_sex2" name="rn_sex" value="F">
-									<label for="rn_sex2">¿©</label>
+									<label for="rn_sex2">ì—¬</label>
 								</li>
 								<li class="birth">
-									<input type="text" id="rn_jumin1" name="rn_jumin1" maxlength="6" placeholder="»ı³â¿ùÀÏ ( ¿¹ 730804 )">
+									<input type="text" id="rn_jumin1" name="rn_jumin1" maxlength="6" placeholder="ìƒë…„ì›”ì¼ ( ì˜ˆ 730804 )">
 								</li>
 								<li class="phone">
-									<input type="text" id="cr_mphone" name="cr_mphone" maxlength="11" placeholder="¿¬¶ôÃ³ ( ¿¹ 01012345678 )">
+									<input type="text" id="cr_mphone" name="cr_mphone" maxlength="11" placeholder="ì—°ë½ì²˜ ( ì˜ˆ 01012345678 )">
 								</li>
 							</ul>
 						</form>	
 						<div class="btn_area">
 							<a href="#" data-role="open_popup" data-send="popup_event|1" >
-								<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_db_btn01.png" data-mo-src="./images/m20211029_aia_db_btn01.png" alt="³» º¸Çè·á °è»ê">
+								<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_db_btn01.png" data-mo-src="./images/m20211029_aia_db_btn01.png" alt="ë‚´ ë³´í—˜ë£Œ ê³„ì‚°">
 							</a>
 							<a href="#" data-role="open_popup" data-send="popup_event|2" >
-								<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211125_aia_db_btn02.png" data-mo-src="./images/m20211125_aia_db_btn02.png" alt="¹«·á »ó´ã ½ÅÃ»">
+								<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211125_aia_db_btn02.png" data-mo-src="./images/m20211125_aia_db_btn02.png" alt="ë¬´ë£Œ ìƒë‹´ ì‹ ì²­">
 							</a>
 						</div>
 					</div>
@@ -519,28 +693,28 @@ input::-moz-placeholder { color: #7f7f7f; }
 						<form method="post" action="" name="frm">
 							<ul>
 								<li class="name">
-									<input type="text" id="rn_cust_name2" name="rn_cust_name" placeholder="ÀÌ¸§" >
+									<input type="text" id="rn_cust_name2" name="rn_cust_name" placeholder="ì´ë¦„" >
 								</li>		
 								<li class="sex">
 									<input type="radio" id="rn_sex3" name="rn_sex2" value="M" checked="checked">
-									<label for="rn_sex3">³²</label>
+									<label for="rn_sex3">ë‚¨</label>
 									<input type="radio" id="rn_sex4" name="rn_sex2" value="F">
-									<label for="rn_sex4">¿©</label>
+									<label for="rn_sex4">ì—¬</label>
 								</li>
 								<li class="birth">
-									<input type="text" id="rn_jumin2" name="rn_jumin1" maxlength="6" placeholder="»ı³â¿ùÀÏ ( ¿¹ 730804 )">
+									<input type="text" id="rn_jumin2" name="rn_jumin1" maxlength="6" placeholder="ìƒë…„ì›”ì¼ ( ì˜ˆ 730804 )">
 								</li>
 								<li class="phone">
-									<input type="text" id="cr_mphone2" name="cr_mphone" maxlength="11" placeholder="¿¬¶ôÃ³ ( ¿¹ 01012345678 )">
+									<input type="text" id="cr_mphone2" name="cr_mphone" maxlength="11" placeholder="ì—°ë½ì²˜ ( ì˜ˆ 01012345678 )">
 								</li>
 							</ul>
 						</form>	
 						<div class="btn_area">
 							<a href="#" data-role="open_popup" data-send="popup_event|1" >
-								<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_db_btn03.png" data-mo-src="./images/m20211029_aia_db_btn01.png" alt="³» º¸Çè·á °è»ê">
+								<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_db_btn03.png" data-mo-src="./images/m20211029_aia_db_btn01.png" alt="ë‚´ ë³´í—˜ë£Œ ê³„ì‚°">
 							</a>
 							<a href="#" data-role="open_popup" data-send="popup_event|2" >
-								<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_db_btn04.png" data-mo-src="./images/m20211029_aia_db_btn02.png" alt="¹«·á »ó´ã ½ÅÃ»">
+								<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_db_btn04.png" data-mo-src="./images/m20211029_aia_db_btn02.png" alt="ë¬´ë£Œ ìƒë‹´ ì‹ ì²­">
 							</a>
 						</div>
 					</div>
@@ -551,14 +725,14 @@ input::-moz-placeholder { color: #7f7f7f; }
             <div class="guide_area">
 				<div class="subTitle">
 					<div class="wrap">
-						<button><img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_guide_txt01.png" data-mo-src="./images/m20211029_aia_guide_txt01.png" alt="°¡ÀÔ½Ã ¾Ë¾ÆµÎ¾î¾ß ÇÒ »çÇ×"></button>
+						<button><img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_guide_txt01.png" data-mo-src="./images/m20211029_aia_guide_txt01.png" alt="ê°€ì…ì‹œ ì•Œì•„ë‘ì–´ì•¼ í•  ì‚¬í•­"></button>
 					</div>
 				</div>
 				<div class="img">
-					<img src="./images/c20211125_blank.gif" data-pc-src="./images/w_guaranteedissue_ddtt_dm.gif" data-mo-src="./images/m_guaranteedissue_ddtt_dm.gif" alt="°¡ÀÔ½Ã À¯ÀÇ»çÇ× ÀÌ¹ÌÁö">
+					<img src="./images/c20211125_blank.gif" data-pc-src="./images/w_guaranteedissue_ddtt_dm.gif" data-mo-src="./images/m_guaranteedissue_ddtt_dm.gif" alt="ê°€ì…ì‹œ ìœ ì˜ì‚¬í•­ ì´ë¯¸ì§€">
 					<div class="btn">
 						<a href="https://www.aia.co.kr/ko/disclosure/our-products/insurance-product-list.html" target="_blank" >
-							<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20210311_aia_guide_btn01.gif" data-mo-src="./images/m20210311_aia_guide_btn01.gif" alt="º¸È£±İÀ¶»óÇ°µî·ÏºÎ">
+							<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20210311_aia_guide_btn01.gif" data-mo-src="./images/m20210311_aia_guide_btn01.gif" alt="ë³´í˜¸ê¸ˆìœµìƒí’ˆë“±ë¡ë¶€">
 						</a>
 					</div>
 				</div>
@@ -568,49 +742,49 @@ input::-moz-placeholder { color: #7f7f7f; }
 
 		<div class="footer">
 			<div class="inner">
-				<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_footer.gif" data-mo-src="./images/m20211029_aia_footer.gif" alt="ÇÏ´Ü¹®±¸ÂüÁ¶">
+				<img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211029_aia_footer.gif" data-mo-src="./images/m20211029_aia_footer.gif" alt="í•˜ë‹¨ë¬¸êµ¬ì°¸ì¡°">
 				<a href="#">AIA.COM</a>
 				<div class="hide">
 					<h2>AIA</h2>
-					<p>AIA»ı¸íº¸Çè ÁÖ½ÄÈ¸»ç »ç¾÷ÀÚÁ¤º¸</p>
-					<p>´ëÇ¥ÀÌ»ç : ÇÇÅÍÁ¤</p>
-					<address>ÁÖ¼Ò : ¼­¿ï½Ã Áß±¸ ÅëÀÏ·Î 2±æ 16 AIAÅ¸¿ö</address>
-					<p>»ç¾÷ÀÚµî·Ï¹øÈ£ : 711-87-00663</p>
-					<p>Åë½ÅÆÇ¸Å½Å°í¹øÈ£ : 2020-¼­¿ïÁß±¸-1209È£</p>
-					<p>AIA»ı¸í °í°´¼¾ÅÍ 1588-9898</p>
-					<p>Ã»¾ç °ü·Ã ¹®ÀÇ 1600-0880</p>
-					<p>¹ÙÀÌÅ»¸®Æ¼ °ü·Ã¹®ÀÇ 1566-8777</p>
+					<p>AIAìƒëª…ë³´í—˜ ì£¼ì‹íšŒì‚¬ ì‚¬ì—…ìì •ë³´</p>
+					<p>ëŒ€í‘œì´ì‚¬ : í”¼í„°ì •</p>
+					<address>ì£¼ì†Œ : ì„œìš¸ì‹œ ì¤‘êµ¬ í†µì¼ë¡œ 2ê¸¸ 16 AIAíƒ€ì›Œ</address>
+					<p>ì‚¬ì—…ìë“±ë¡ë²ˆí˜¸ : 711-87-00663</p>
+					<p>í†µì‹ íŒë§¤ì‹ ê³ ë²ˆí˜¸ : 2020-ì„œìš¸ì¤‘êµ¬-1209í˜¸</p>
+					<p>AIAìƒëª… ê³ ê°ì„¼í„° 1588-9898</p>
+					<p>ì²­ì–‘ ê´€ë ¨ ë¬¸ì˜ 1600-0880</p>
+					<p>ë°”ì´íƒˆë¦¬í‹° ê´€ë ¨ë¬¸ì˜ 1566-8777</p>
 				</div>
 			</div>
 		</div>
 
-		<!-- ÇÃ·ÎÆÃ¹Ù -->
+		<!-- í”Œë¡œíŒ…ë°” -->
 		<div class="floating" >
 			<div class="layer">
 				<div class="db_box">
 					<form method="post" action="" name="frm3">
 						<ul>
 							<li class="name">
-								<input type="text" name="rn_cust_name" placeholder="ÀÌ¸§" >
+								<input type="text" name="rn_cust_name" placeholder="ì´ë¦„" >
 							</li>
 							<li class="sex">
 								<input type="radio" id="rn_sex5" name="rn_sex3" value="M" checked="checked">
-								<label for="rn_sex5">³²</label>
+								<label for="rn_sex5">ë‚¨</label>
 								<input type="radio" id="rn_sex6" name="rn_sex3" value="F">
-								<label for="rn_sex6">¿©</label>
+								<label for="rn_sex6">ì—¬</label>
 							</li>
 							<li class="birth">
-								<input type="text" name="rn_jumin1" maxlength="6" placeholder="»ı³â¿ùÀÏ (¿¹ 730804)" onKeyUp="onlyNumber(this);" onKeyPress="checkInt()">
+								<input type="text" name="rn_jumin1" maxlength="6" placeholder="ìƒë…„ì›”ì¼ (ì˜ˆ 730804)" onKeyUp="onlyNumber(this);" onKeyPress="checkInt()">
 							</li>
 							<li class="phone">
-								<input type="text" name="cr_mphone" maxlength="11" placeholder="ÈŞ´ëÆù¹øÈ£(¡¯-¡¯¾øÀÌ ÀÔ·Â)" onKeyUp="onlyNumberWithBar(this);numToTel(this);" onKeyPress="checkInt()" >
+								<input type="text" name="cr_mphone" maxlength="11" placeholder="íœ´ëŒ€í°ë²ˆí˜¸(â€™-â€™ì—†ì´ ì…ë ¥)" onKeyUp="onlyNumberWithBar(this);numToTel(this);" onKeyPress="checkInt()" >
 							</li>
 						</ul>
 					</form>
 
 					<div class="btn_area calc">
-						<!-- ÇÃ·ÎÆÃ¹Ù "º¸Çè·á °á°úº¸±â" ¹öÆ° -->
-						<a href="#" data-role="open_popup" data-send="popup_event|1" ><img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211125_aia_float_btn01.png" data-mo-src="./images/m20210311_aia_float_btn03.png" alt="º¸Çè·á °á°úº¸±â"></a>
+						<!-- í”Œë¡œíŒ…ë°” "ë³´í—˜ë£Œ ê²°ê³¼ë³´ê¸°" ë²„íŠ¼ -->
+						<a href="#" data-role="open_popup" data-send="popup_event|1" ><img src="./images/c20211125_blank.gif" data-pc-src="./images/w20211125_aia_float_btn01.png" data-mo-src="./images/m20210311_aia_float_btn03.png" alt="ë³´í—˜ë£Œ ê²°ê³¼ë³´ê¸°"></a>
 						<div class="result">
 							<img src="./images/m20211029_aia_float_text01.png" alt="">
 							<input type="text" class="user_name" readonly >
@@ -619,8 +793,8 @@ input::-moz-placeholder { color: #7f7f7f; }
 					</div>
 
 					<div class="btn_area consult">
-						<!-- ÇÃ·ÎÆÃ¹Ù "»ó´ã ½ÅÃ»ÇÏ±â" ¹öÆ° -->
-						<a href="#" data-role="open_popup" data-send="popup_event|2" ><img src="./images/m20210311_aia_float_btn04.png" alt="»ó´ã ½ÅÃ»ÇÏ±â"></a>
+						<!-- í”Œë¡œíŒ…ë°” "ìƒë‹´ ì‹ ì²­í•˜ê¸°" ë²„íŠ¼ -->
+						<a href="#" data-role="open_popup" data-send="popup_event|2" ><img src="./images/m20210311_aia_float_btn04.png" alt="ìƒë‹´ ì‹ ì²­í•˜ê¸°"></a>
 						<div class="result">
 							<img src="./images/m20211029_aia_float_text02.png" alt="">
 						</div>
@@ -628,74 +802,74 @@ input::-moz-placeholder { color: #7f7f7f; }
 				</div>	
 				
 				<div class="btn">
-					<button class="btn_toggle">¿­±â/´İ±â</button>
+					<button class="btn_toggle">ì—´ê¸°/ë‹«ê¸°</button>
 				</div>
 			</div>
 			
 			<div class="inner">
 				<ul>
-					<li><a href="#" class="btn01"><img src="./images/m20211029_aia_db_btn01.png" alt="³» º¸Çè·á °è»ê"></a></li>
-					<li><a href="#" class="btn02"><img src="./images/m20211125_aia_db_btn02.png" alt="¹«·á »ó´ã ½ÅÃ»"></a></li>
+					<li><a href="#" class="btn01"><img src="./images/m20211029_aia_db_btn01.png" alt="ë‚´ ë³´í—˜ë£Œ ê³„ì‚°"></a></li>
+					<li><a href="#" class="btn02"><img src="./images/m20211125_aia_db_btn02.png" alt="ë¬´ë£Œ ìƒë‹´ ì‹ ì²­"></a></li>
 				</ul>
 			</div>
 		</div>
-		<!-- // ÇÃ·ÎÆÃ¹Ù -->
+		<!-- // í”Œë¡œíŒ…ë°” -->
 
 
-		<!-- popup : °³ÀÎÁ¤º¸ µ¿ÀÇ ÆË¾÷ -->
+		<!-- popup : ê°œì¸ì •ë³´ ë™ì˜ íŒì—… -->
 		<div class="popup agree" data-receive="popup_event">
 			<div class="mask"></div>
 			<div class="popup_content">
 				<div class="img">
-					<img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_title01.png" data-mo-src="./images/m20210311_popup_title01.png" alt="AIA°¡ °í°´´Ô¸¸À» À§ÇÑ ¸ÂÃã º¸ÀåÀ» ¼³°è ÁßÀÔ´Ï´Ù" >
+					<img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_title01.png" data-mo-src="./images/m20210311_popup_title01.png" alt="AIAê°€ ê³ ê°ë‹˜ë§Œì„ ìœ„í•œ ë§ì¶¤ ë³´ì¥ì„ ì„¤ê³„ ì¤‘ì…ë‹ˆë‹¤" >
 				</div>
 				<div class="wrap">
 					<div class="agree_area">
 						<div class="agree">
 							<div>
 								<input type="checkbox" class="checkbox" id="cust_uyn1" name="cust_uyn1">
-								<label for="cust_uyn1"><img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_text01.png" data-mo-src="./images/m20210311_popup_text01.png" alt="°³ÀÎÁ¤º¸ ¼öÁı ¹× ÀÌ¿ë µ¿ÀÇ (ÇÊ¼ö)"></label>
+								<label for="cust_uyn1"><img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_text01.png" data-mo-src="./images/m20210311_popup_text01.png" alt="ê°œì¸ì •ë³´ ìˆ˜ì§‘ ë° ì´ìš© ë™ì˜ (í•„ìˆ˜)"></label>
 								<div class="toggle">
-									<img src="./images/c20211029_popup_agree01.png" alt="°³ÀÎÁ¤º¸ ¼öÁı ¹× ÀÌ¿ë µ¿ÀÇ ¾à°ü" >
+									<img src="./images/c20211029_popup_agree01.png" alt="ê°œì¸ì •ë³´ ìˆ˜ì§‘ ë° ì´ìš© ë™ì˜ ì•½ê´€" >
 								</div>
 							</div>
 						</div>
-						<button class="all_check" > <!-- ³»º¸Çè·á °è»ê / ¹«·á»ó´ã½ÅÃ» Å¬¸¯¿¡ µû¶ó calc() / comp() ¿ÂÅ¬¸¯ ÀÌº¥Æ® »ı¼ºÇÔ. -->
-							<img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_btn01.png" data-mo-src="./images/m20210311_popup_btn01.png" alt="ÀüÃ¼ µ¿ÀÇÇÏ±â" >
+						<button class="all_check" > <!-- ë‚´ë³´í—˜ë£Œ ê³„ì‚° / ë¬´ë£Œìƒë‹´ì‹ ì²­ í´ë¦­ì— ë”°ë¼ calc() / comp() ì˜¨í´ë¦­ ì´ë²¤íŠ¸ ìƒì„±í•¨. -->
+							<img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_btn01.png" data-mo-src="./images/m20210311_popup_btn01.png" alt="ì „ì²´ ë™ì˜í•˜ê¸°" >
 						</button>
 					</div>
 				</div>
 				
 				<button class="btn_close">
-					<img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_btn_close.png" data-mo-src="./images/m20210311_popup_btn_close.png" alt="ÆË¾÷ ´İ±â" >
+					<img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_btn_close.png" data-mo-src="./images/m20210311_popup_btn_close.png" alt="íŒì—… ë‹«ê¸°" >
 				</button>
 			</div>
 		</div>
-		<!-- // popup : °³ÀÎÁ¤º¸ µ¿ÀÇ ÆË¾÷ -->
+		<!-- // popup : ê°œì¸ì •ë³´ ë™ì˜ íŒì—… -->
 
 
-		<!-- popup : »ó´ã½ÅÃ» ¿Ï·á-->
+		<!-- popup : ìƒë‹´ì‹ ì²­ ì™„ë£Œ-->
 		<div class="popup type02 comp" >
 			<div class="mask"></div>
 			<div class="popup_content">
-				<h2 class="bold">º¸Çè»ó´ã ½ÅÃ»ÀÌ<br><span>¿Ï·á</span>µÇ¾ú½À´Ï´Ù</h2>
-				<p class="text bold">ºü¸¥ ½ÃÀÏ ³»¿¡ <span>Àü¹®»ó´ã¿ø</span>ÀÌ º¸Àå³»¿ª°ú º¸Çè·á¸¦<br>Ä£ÀıÇÏ°Ô ¼³¸íÇØµå¸³´Ï´Ù. (ÆòÀÏ±âÁØ)</p>
-				<button class="btn_close"><img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_btn_close02.png" data-mo-src="./images/m20210311_popup_btn_close02.png" alt="ÆË¾÷ ´İ±â"></button>
+				<h2 class="bold">ë³´í—˜ìƒë‹´ ì‹ ì²­ì´<br><span>ì™„ë£Œ</span>ë˜ì—ˆìŠµë‹ˆë‹¤</h2>
+				<p class="text bold">ë¹ ë¥¸ ì‹œì¼ ë‚´ì— <span>ì „ë¬¸ìƒë‹´ì›</span>ì´ ë³´ì¥ë‚´ì—­ê³¼ ë³´í—˜ë£Œë¥¼<br>ì¹œì ˆí•˜ê²Œ ì„¤ëª…í•´ë“œë¦½ë‹ˆë‹¤. (í‰ì¼ê¸°ì¤€)</p>
+				<button class="btn_close"><img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_btn_close02.png" data-mo-src="./images/m20210311_popup_btn_close02.png" alt="íŒì—… ë‹«ê¸°"></button>
 			</div>
 		</div>
-		<!-- // popup : »ó´ã½ÅÃ» ¿Ï·á -->
+		<!-- // popup : ìƒë‹´ì‹ ì²­ ì™„ë£Œ -->
 
-		<!-- popup : º¸Çè·á °è»ê -->
+		<!-- popup : ë³´í—˜ë£Œ ê³„ì‚° -->
 		<div class="popup type02 calc">
 			<div class="mask"></div>
 			<div class="popup_content">
-				<h2 class="bold"><span id="user_name">XXX</span> °í°´´ÔÀÇ º¸Çè·á´Â</h2>
-				<div class="calc_area bold">¿ù <span>[<strong id="user_premium">00,000</strong>]</span>¿ø</div><br>
-				<p class="text bold">ºü¸¥ ½ÃÀÏ ³»¿¡ <span>Àü¹®»ó´ã¿ø</span>ÀÌ º¸Àå³»¿ª°ú º¸Çè·á¸¦<br>Ä£ÀıÇÏ°Ô ¼³¸íÇØµå¸³´Ï´Ù. (ÆòÀÏ±âÁØ)</p>
-				<button class="btn_close"><img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_btn_close02.png" data-mo-src="./images/m20210311_popup_btn_close02.png" alt="ÆË¾÷ ´İ±â"></button>
+				<h2 class="bold"><span id="user_name">XXX</span> ê³ ê°ë‹˜ì˜ ë³´í—˜ë£ŒëŠ”</h2>
+				<div class="calc_area bold">ì›” <span>[<strong id="user_premium">00,000</strong>]</span>ì›</div><br>
+				<p class="text bold">ë¹ ë¥¸ ì‹œì¼ ë‚´ì— <span>ì „ë¬¸ìƒë‹´ì›</span>ì´ ë³´ì¥ë‚´ì—­ê³¼ ë³´í—˜ë£Œë¥¼<br>ì¹œì ˆí•˜ê²Œ ì„¤ëª…í•´ë“œë¦½ë‹ˆë‹¤. (í‰ì¼ê¸°ì¤€)</p>
+				<button class="btn_close"><img src="./images/c20210311_blank.gif" data-pc-src="./images/w20210311_popup_btn_close02.png" data-mo-src="./images/m20210311_popup_btn_close02.png" alt="íŒì—… ë‹«ê¸°"></button>
 			</div>
 		</div>
-		<!-- // popup : º¸Çè·á °è»ê -->
+		<!-- // popup : ë³´í—˜ë£Œ ê³„ì‚° -->
 
 
 	</div>
